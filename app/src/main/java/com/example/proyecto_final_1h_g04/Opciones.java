@@ -15,6 +15,6 @@ public class Opciones extends AppCompatActivity {
 
     public void getPeticion(){
         TextView msgGrupo = findViewById(R.id.txtMsgMain);
-        MainActivity.getMensaje(msgGrupo);
+        MainActivity.getMensaje(msgGrupo,"G4T7");
     }
 }

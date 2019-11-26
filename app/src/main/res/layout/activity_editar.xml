@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registro">
+    tools:context=".Editar">
 
 
     <CheckBox
-        android:id="@+id/chk_registro_quimica"
+        android:id="@+id/chk_registro_quimicaE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Quimica"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.981" />
 
     <CheckBox
-        android:id="@+id/chk_registro_fisica"
+        android:id="@+id/chk_registro_fisicaE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Física"
@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.935" />
 
     <TextView
-        android:id="@+id/textView18"
+        android:id="@+id/textView18E"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Asignaturas"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.845" />
 
     <EditText
-        android:id="@+id/txt_registro_usuario"
+        android:id="@+id/txt_registro_usuarioE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -59,7 +59,7 @@
         app:layout_constraintVertical_bias="0.139" />
 
     <EditText
-        android:id="@+id/txt_registro_celular"
+        android:id="@+id/txt_registro_celularE"
         android:layout_width="365dp"
         android:layout_height="46dp"
         android:ems="10"
@@ -73,7 +73,7 @@
         app:layout_constraintVertical_bias="0.414" />
 
     <EditText
-        android:id="@+id/txt_registro_apellido"
+        android:id="@+id/txt_registro_apellidoE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -87,7 +87,7 @@
         app:layout_constraintVertical_bias="0.279" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView3E"
         android:layout_width="86dp"
         android:layout_height="59dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,10 +99,10 @@
         app:srcCompat="@drawable/uce_logo" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="114dp"
-        android:layout_height="33dp"
-        android:text="Registro de usuarios"
+        android:id="@+id/textViewE"
+        android:layout_width="154dp"
+        android:layout_height="34dp"
+        android:text="Nuevos Datos Usuario"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +112,7 @@
         app:layout_constraintVertical_bias="0.048" />
 
     <EditText
-        android:id="@+id/txt_registro_nombre"
+        android:id="@+id/txt_registro_nombreE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -126,7 +126,7 @@
         app:layout_constraintVertical_bias="0.214" />
 
     <EditText
-        android:id="@+id/txt_registro_email"
+        android:id="@+id/txt_registro_emailE"
         android:layout_width="365dp"
         android:layout_height="47dp"
         android:ems="10"
@@ -141,7 +141,7 @@
 
 
     <EditText
-        android:id="@+id/txt_registro_password"
+        android:id="@+id/txt_registro_passwordE"
         android:layout_width="364dp"
         android:layout_height="54dp"
         android:ems="10"
@@ -155,7 +155,7 @@
         app:layout_constraintVertical_bias="0.487" />
 
     <EditText
-        android:id="@+id/txt_registro_confirmaPassword"
+        android:id="@+id/txt_registro_confirmaPasswordE"
         android:layout_width="364dp"
         android:layout_height="54dp"
         android:ems="10"
@@ -169,7 +169,7 @@
         app:layout_constraintVertical_bias="0.561" />
 
     <Button
-        android:id="@+id/btn_registro_foto"
+        android:id="@+id/btn_registro_fotoE"
         android:layout_width="140dp"
         android:layout_height="134dp"
         android:background="@drawable/user_photo"
@@ -183,7 +183,7 @@
 
 
     <RadioGroup
-        android:id="@+id/radioSexo"
+        android:id="@+id/radioSexoE"
         android:layout_width="116dp"
         android:layout_height="69dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -194,7 +194,7 @@
         app:layout_constraintVertical_bias="0.69">
 
         <RadioButton
-            android:id="@+id/radio_registro_hombre"
+            android:id="@+id/radio_registro_hombreE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Masculino"
@@ -206,7 +206,7 @@
             app:layout_constraintVertical_bias="0.513" />
 
         <RadioButton
-            android:id="@+id/radio_registro_mujer"
+            android:id="@+id/radio_registro_mujerE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Femenino"
@@ -219,7 +219,7 @@
     </RadioGroup>
 
     <EditText
-        android:id="@+id/txt_registro_fechaNacimiento"
+        android:id="@+id/txt_registro_fechaNacimientoE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -233,7 +233,7 @@
         app:layout_constraintVertical_bias="0.766" />
 
     <Switch
-        android:id="@+id/swicht_registro_becado"
+        android:id="@+id/swicht_registro_becadoE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Becado"
@@ -245,7 +245,7 @@
         app:layout_constraintVertical_bias="0.811" />
 
     <TextView
-        android:id="@+id/lbl_sexo"
+        android:id="@+id/lbl_sexoE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sexo"
@@ -258,7 +258,7 @@
         app:layout_constraintVertical_bias="0.612" />
 
     <CheckBox
-        android:id="@+id/chk_registro_matematica"
+        android:id="@+id/chk_registro_matematicaE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Matemática"
@@ -270,7 +270,7 @@
         app:layout_constraintVertical_bias="0.889" />
 
     <CheckBox
-        android:id="@+id/chk_registro_ingles"
+        android:id="@+id/chk_registro_inglesE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ingles"
@@ -282,7 +282,7 @@
         app:layout_constraintVertical_bias="0.878" />
 
     <CheckBox
-        android:id="@+id/chk_registro_lenguaje"
+        android:id="@+id/chk_registro_lenguajeE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lenguaje"
@@ -306,11 +306,11 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_guardar_registro"
+        android:id="@+id/btn_guardar_registroE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="escribir"
-        android:text="GUARDAR USUARIO"
+        android:onClick="editarUsuario"
+        android:text="EDITAR USUARIO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

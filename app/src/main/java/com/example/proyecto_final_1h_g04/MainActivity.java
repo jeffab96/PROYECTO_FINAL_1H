@@ -28,9 +28,6 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-
-
     String contenido;
     File file;
     EditText texto;
@@ -318,15 +315,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Método para obetener el mensaje de servicio
     public void getPeticion() {
         TextView msgGrupo = findViewById(R.id.txtMsgMain);
-        getMensaje(msgGrupo);
+        getMensaje(msgGrupo,"G4T7");
     }
 
     //Se invoca desde todas las vistas para obtener el mensaje de servicio
-    public static void getMensaje(TextView textView) {
-
+    public static void getMensaje(TextView textView, String servicio) {
         TextView msgGrupo = textView;
 
-        String link = "https://optativa3-g4-t7.herokuapp.com/G4T7";
+       // String link = "https://optativa3-g4-t7.herokuapp.com/G4T7";
+        String link = "https://optativa3-g4-t7.herokuapp.com/"+servicio;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 

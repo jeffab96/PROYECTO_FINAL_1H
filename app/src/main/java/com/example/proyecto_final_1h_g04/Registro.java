@@ -1,5 +1,6 @@
 package com.example.proyecto_final_1h_g04;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Xml;
@@ -67,7 +68,7 @@ public class Registro extends AppCompatActivity {
 
 
         matriz = leerToArray();
-       // escribirFile();
+        // escribirFile();
 
         this.file_pathx = (Environment.getExternalStorageDirectory() + this.carpeta);
 
@@ -135,18 +136,14 @@ public class Registro extends AppCompatActivity {
             EditText apellido = findViewById(R.id.txt_registro_apellido);
             EditText email = findViewById(R.id.txt_registro_email);
             EditText celular = findViewById(R.id.txt_registro_celular);
-
             String sexo = obtenerSexo();
-
             EditText fecha = findViewById(R.id.txt_registro_fechaNacimiento);
-
             String asignaturas = obtenerAsignatura();
-
             String beca = obtenerBeca();
 
             datos[datos.length - 1][0] = usuario.getText().toString();
             datos[datos.length - 1][1] = pass.getText().toString();
-           // datos[datos.length - 1][5] = passcon.getText().toString();
+            // datos[datos.length - 1][5] = passcon.getText().toString();
             datos[datos.length - 1][2] = nombre.getText().toString();
             datos[datos.length - 1][3] = apellido.getText().toString();
             datos[datos.length - 1][4] = email.getText().toString();
@@ -158,13 +155,14 @@ public class Registro extends AppCompatActivity {
             datos[datos.length - 1][10] = beca;
 
 
-
+            //Comprueba si campo el usuario no está vacío
             if (usuario.getText().length() == 0) {
                 valida = false;
                 String msg = "Usuario vacio";
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             }
-            if (!pass.getText().toString().equals(passcon.getText().toString())){
+            //Comprueba si los campos de contraseñas coinciden
+            if (!pass.getText().toString().equals(passcon.getText().toString())) {
                 valida = false;
                 String msg = "Las contraseñas no coinciden";
                 Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -177,10 +175,8 @@ public class Registro extends AppCompatActivity {
             FileWriter fichero = null;
             PrintWriter pw = null;
             try {
-                System.out.println("66666"+ valida);
                 fichero = new FileWriter(file);
                 pw = new PrintWriter(fichero);
-                System.out.println("66666"+ valida);
                 // EditText text=findViewById(R.id.txt_entrada_usuario);
                 for (int i = 0; i < datos.length; i++) {
                     pw.println("");
@@ -202,10 +198,14 @@ public class Registro extends AppCompatActivity {
                     e2.printStackTrace();
                 }
             }
-            matriz = leerToArray();
+
         }
+        MainActivity.matriz = datos;
         System.out.println(valida);
+        Intent listar = new Intent(this, MainActivity.class);
+        startActivity(listar);
     }
+
 
     String obtenerSexo() {
         String resultado = "";
@@ -251,209 +251,210 @@ public class Registro extends AppCompatActivity {
         Switch sw = findViewById(R.id.swicht_registro_becado);
         if (sw.isChecked() == true) {
             resultado += "Sí";
-        }else{
+        } else {
             resultado += "No";
         }
         return resultado;
     }
 
-        public void dim () {
-            //int a[]=new int[2];
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            InputStreamReader archivo = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(archivo);
-            int i = 0;
-            int j = 0;
-            int ascii;
-            try {
-                while ((ascii = br.read()) != -1) {
-                    if (ascii == 10) {
-                        i++;
-                        j = 0;
+    public void dim() {
+        //int a[]=new int[2];
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        InputStreamReader archivo = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(archivo);
+        int i = 0;
+        int j = 0;
+        int ascii;
+        try {
+            while ((ascii = br.read()) != -1) {
+                if (ascii == 10) {
+                    i++;
+                    j = 0;
+                } else {
+                    if (ascii == 44) {
+                        j++;
                     } else {
-                        if (ascii == 44) {
-                            j++;
-                        } else {
-                        }
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-            dimx = i;
-            dimy = j;
-            System.out.println("dimx" + i);
-            System.out.println("dimy" + j);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        public void escribir (View view){
-            escribirFile();
-            metodoXML(matriz);
-        }
-        public void leer (View view){
-            dim();
-            leerToArray();
-        }
-        public String[][] leerToArray () {
-            dim();
-            String matrix[][] = new String[dimx][dimy];
-            EditText text = findViewById(R.id.txt_registro_usuario);
-            String contenido = "";
-            FileInputStream fis = null;
-            try {
-                fis = new FileInputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            InputStreamReader archivo = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(archivo);
-            int ascii;
-
-            try {
-
-                int i = -1;
-                int j = 0;
-                while ((ascii = br.read()) != -1) {
-                    char caracter = (char) ascii;
-                    if (ascii == 10) {
-                        i++;
-                        j = 0;
-                    } else {
-                        if (ascii == 44) {
-                            System.out.println("azxzx" + matrix.length + "mmm" + matrix[0].length);
-                            matrix[i][j] = contenido;
-                            contenido = "";
-                            j++;
-                        } else {
-                            contenido += caracter;
-                        }
-                    }
-                }
-                text.setText(contenido);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return matrix;
-        }
-
-        public String metodoXML (String[][]datos){
-///////////////////////////////////////////"metodo" para crear un string en foemato xml de una matriz
-            XmlSerializer serializer = Xml.newSerializer();
-            StringWriter writer = new StringWriter();
-            String result = "aa";
-            try {
-                serializer.setOutput(writer);
-                serializer.startDocument("UFT-8", true);
-                serializer.startTag("", "usuarios");
-                for (int i = 0; i < datos.length; i++) {
-                    serializer.startTag("", "usuario");
-
-                    serializer.startTag("", "nickname");
-                    serializer.text(String.valueOf(datos[i][0]));
-                    serializer.endTag("", "nickname");
-
-                    serializer.startTag("", "pass");
-                    serializer.text(String.valueOf(datos[i][1]));
-                    serializer.endTag("", "pass");
-
-                    serializer.startTag("", "nombre");
-                    serializer.text(String.valueOf(datos[i][2]));
-                    serializer.endTag("", "nombre");
-
-                    serializer.startTag("", "apellido");
-                    serializer.text(String.valueOf(datos[i][3]));
-                    serializer.endTag("", "apellido");
-
-                    serializer.startTag("", "email");
-                    serializer.text(String.valueOf(datos[i][4]));
-                    serializer.endTag("", "email");
-
-                    serializer.startTag("", "celular");
-                    serializer.text(String.valueOf(datos[i][5]));
-                    serializer.endTag("", "celular");
-
-                    serializer.startTag("", "genero");
-                    serializer.text(String.valueOf(datos[i][7]));
-                    serializer.endTag("", "genero");
-
-                    serializer.startTag("", "fecha");
-                    serializer.text(String.valueOf(datos[i][8]));
-                    serializer.endTag("", "fecha");
-
-                    serializer.startTag("", "asignatura");
-                    serializer.text(String.valueOf(datos[i][9]));
-                    serializer.endTag("", "asignatura");
-
-                    serializer.startTag("", "becado");
-                    serializer.text(String.valueOf(datos[i][10]));
-                    serializer.endTag("", "becado");
-
-
-
-                    serializer.endTag("", "usuario");
-                }
-                serializer.endTag("", "usuarios");
-                serializer.endDocument();
-                result = writer.toString();
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            FileWriter fichero = null;
-            PrintWriter pw = null;
-            try {
-                fichero = new FileWriter(filex);
-                pw = new PrintWriter(fichero);
-                // EditText text=findViewById(R.id.txt_entrada_usuario);
-
-                pw.print(result);
-                pw.flush();
-                pw.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (null != fichero)
-                        fichero.close();
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                }
-            }
-
-            try {
-                fichero = new FileWriter(filexh);
-                pw = new PrintWriter(fichero);
-                // EditText text=findViewById(R.id.txt_entrada_usuario);
-
-                pw.print(result);
-                pw.flush();
-                pw.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (null != fichero)
-                        fichero.close();
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                }
-            }
-            matriz = leerToArray();
-
-            System.out.println("ssssss" + result);
-            return result;
-        }
-
-        public void getPeticion () {
-            TextView msgGrupo = findViewById(R.id.txtMsgMain);
-            MainActivity.getMensaje(msgGrupo);
-        }
-
+        dimx = i;
+        dimy = j;
+        System.out.println("dimx" + i);
+        System.out.println("dimy" + j);
     }
+
+    public void escribir(View view) {
+        escribirFile();
+        metodoXML(matriz);
+    }
+
+    public void leer(View view) {
+        dim();
+        leerToArray();
+    }
+
+    public String[][] leerToArray() {
+        dim();
+        String matrix[][] = new String[dimx][dimy];
+        EditText text = findViewById(R.id.txt_registro_usuario);
+        String contenido = "";
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        InputStreamReader archivo = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(archivo);
+        int ascii;
+
+        try {
+
+            int i = -1;
+            int j = 0;
+            while ((ascii = br.read()) != -1) {
+                char caracter = (char) ascii;
+                if (ascii == 10) {
+                    i++;
+                    j = 0;
+                } else {
+                    if (ascii == 44) {
+                        System.out.println("azxzx" + matrix.length + "mmm" + matrix[0].length);
+                        matrix[i][j] = contenido;
+                        contenido = "";
+                        j++;
+                    } else {
+                        contenido += caracter;
+                    }
+                }
+            }
+            text.setText(contenido);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return matrix;
+    }
+
+    public String metodoXML(String[][] datos) {
+///////////////////////////////////////////"metodo" para crear un string en foemato xml de una matriz
+        XmlSerializer serializer = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+        String result = "aa";
+        try {
+            serializer.setOutput(writer);
+            serializer.startDocument("UFT-8", true);
+            serializer.startTag("", "usuarios");
+            for (int i = 0; i < datos.length; i++) {
+                serializer.startTag("", "usuario");
+
+                serializer.startTag("", "nickname");
+                serializer.text(String.valueOf(datos[i][0]));
+                serializer.endTag("", "nickname");
+
+                serializer.startTag("", "pass");
+                serializer.text(String.valueOf(datos[i][1]));
+                serializer.endTag("", "pass");
+
+                serializer.startTag("", "nombre");
+                serializer.text(String.valueOf(datos[i][2]));
+                serializer.endTag("", "nombre");
+
+                serializer.startTag("", "apellido");
+                serializer.text(String.valueOf(datos[i][3]));
+                serializer.endTag("", "apellido");
+
+                serializer.startTag("", "email");
+                serializer.text(String.valueOf(datos[i][4]));
+                serializer.endTag("", "email");
+
+                serializer.startTag("", "celular");
+                serializer.text(String.valueOf(datos[i][5]));
+                serializer.endTag("", "celular");
+
+                serializer.startTag("", "genero");
+                serializer.text(String.valueOf(datos[i][7]));
+                serializer.endTag("", "genero");
+
+                serializer.startTag("", "fecha");
+                serializer.text(String.valueOf(datos[i][8]));
+                serializer.endTag("", "fecha");
+
+                serializer.startTag("", "asignatura");
+                serializer.text(String.valueOf(datos[i][9]));
+                serializer.endTag("", "asignatura");
+
+                serializer.startTag("", "becado");
+                serializer.text(String.valueOf(datos[i][10]));
+                serializer.endTag("", "becado");
+
+
+                serializer.endTag("", "usuario");
+            }
+            serializer.endTag("", "usuarios");
+            serializer.endDocument();
+            result = writer.toString();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try {
+            fichero = new FileWriter(filex);
+            pw = new PrintWriter(fichero);
+            // EditText text=findViewById(R.id.txt_entrada_usuario);
+
+            pw.print(result);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero)
+                    fichero.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+
+        try {
+            fichero = new FileWriter(filexh);
+            pw = new PrintWriter(fichero);
+            // EditText text=findViewById(R.id.txt_entrada_usuario);
+
+            pw.print(result);
+            pw.flush();
+            pw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero)
+                    fichero.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+        matriz = leerToArray();
+
+        System.out.println("ssssss" + result);
+        return result;
+    }
+
+    public void getPeticion() {
+        TextView msgGrupo = findViewById(R.id.txtMsgMain);
+        MainActivity.getMensaje(msgGrupo,"G4T7");
+    }
+
+}
