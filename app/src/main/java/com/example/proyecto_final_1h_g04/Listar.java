@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,14 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Listar extends AppCompatActivity {
     static String user;
@@ -83,7 +92,50 @@ public class Listar extends AppCompatActivity {
     }
 
     public void cerrarSesion(View v) {
+
         SharedPreferences preferences = getSharedPreferences("credenciales", Context.MODE_PRIVATE); preferences.edit().clear().commit();
+        try {
+            JSONArray mJSONArray = new JSONArray();
+
+            for (int i = 0; i < MainActivity.matriz.length; i++) {
+                JSONObject jObjd = new JSONObject();
+                jObjd.put("usuario", MainActivity.matriz[i][0]);
+                jObjd.put("clave", MainActivity.matriz[i][1]);
+                jObjd.put("nombres", MainActivity.matriz[i][2]);
+                jObjd.put("apellidos", MainActivity.matriz[i][3]);
+                jObjd.put("email", MainActivity.matriz[i][4]);
+                jObjd.put("celular", MainActivity.matriz[i][5]);
+                jObjd.put("genero", MainActivity.matriz[i][7]);
+                jObjd.put("fecha_nacimiento", MainActivity.matriz[i][8]);
+                jObjd.put("asginaturas", MainActivity.matriz[i][9]);
+                jObjd.put("becado", MainActivity.matriz[i][10]);
+                mJSONArray.put(jObjd);
+
+                System.out.println(mJSONArray.toString());
+
+                String link = "http://10.118.215.14:9998/upl/" + mJSONArray.toString();
+                System.out.println(link);
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+
+                URL url = null;
+                HttpURLConnection conexion;
+
+                url = new URL(link);
+                conexion = (HttpURLConnection) url.openConnection();
+                conexion.setRequestMethod("GET");
+
+                conexion.connect();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         Intent principal = new Intent(this, MainActivity.class);
         startActivity(principal);
     }

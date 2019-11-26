@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -22,9 +24,11 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -68,10 +72,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         escribirFile();
         //Se asigna a la matriz local los datos del archivo en caso que existan.
         matriz = leerToArray();
+
+
+        //String mStringArray[][] = matriz;
+        //String s="{\"idSinger\":1,\"firstName\":\"fabs\",\"lastName\":\"escanor\",\"birthDate\":\"2019-11-17\"}";
     }
 
 
-    void crearFiles(String formato){
+    void crearFiles(String formato) {
         File file;
         String archivo = "archivo_datos";
         String carpeta = "/Download/Archivos_OP3/";
@@ -92,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.file=file;
+        this.file = file;
     }
 
 
@@ -114,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             datos[0][3] = "apell";
             datos[0][4] = "admin@uce.com";
             datos[0][5] = "09990";
-            datos[0][6] =  "";
+            datos[0][6] = "";
             datos[0][7] = "f";
-            datos[0][8] = "21/08";
+            datos[0][8] = "2108";
             datos[0][9] = "";
             datos[0][10] = "no";
             FileWriter fichero = null;
@@ -186,10 +194,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     //Lee el archivo y lo convierte a un arreglo
-     public String [][] leerToArray(){
-    //public List<Usuario> leerToArray() {
+    public String[][] leerToArray() {
+        //public List<Usuario> leerToArray() {
         dim();
-         String matrix[][]=new String[dimx][dimy];
+        String matrix[][] = new String[dimx][dimy];
         //List<Usuario> listaUsers;
         // EditText text=findViewById(R.id.txt_entrada_usuario);
         String contenido = "";
@@ -315,15 +323,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Método para obetener el mensaje de servicio
     public void getPeticion() {
         TextView msgGrupo = findViewById(R.id.txtMsgMain);
-        getMensaje(msgGrupo,"G4T7");
+        getMensaje(msgGrupo, "G4T7");
     }
 
     //Se invoca desde todas las vistas para obtener el mensaje de servicio
     public static void getMensaje(TextView textView, String servicio) {
         TextView msgGrupo = textView;
 
-       // String link = "https://optativa3-g4-t7.herokuapp.com/G4T7";
-        String link = "https://optativa3-g4-t7.herokuapp.com/"+servicio;
+        // String link = "https://optativa3-g4-t7.herokuapp.com/G4T7";
+        String link = "https://optativa3-g4-t7.herokuapp.com/" + servicio;
+        //String link = "http://10.118.215.14:9998/G4T7";
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -334,6 +343,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             url = new URL(link);
             conexion = (HttpURLConnection) url.openConnection();
             conexion.setRequestMethod("GET");
+
             conexion.connect();
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
